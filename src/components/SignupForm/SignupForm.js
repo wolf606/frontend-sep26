@@ -64,6 +64,14 @@ export default function SignupForm({setOpen}) {
         />
       </div>
       <div>
+        <h3>Lastname</h3>
+        <TextField
+          required
+          id="outlined-required"
+          label="Required"
+        />
+      </div>
+      <div>
         <h3>Email</h3>
         <TextField
           required
