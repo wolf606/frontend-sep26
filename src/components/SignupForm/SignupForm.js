@@ -2,9 +2,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Snackbar, Alert as MuiAlert } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React, { useState } from "react";
+import { signUp } from '@utils/calls';
+
 
 const style = {
   position: 'absolute',
@@ -20,9 +22,22 @@ const style = {
   pb: 3,
 };
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function SignupForm({setOpen}) {
   const [agree, setAgree] = useState(false);
   const [openM, setOpenM] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
+
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pwdAgain, setPwdAgain] = useState("");
+  const errors = {};
 
   const handleOpen = () => {
     setOpenM(true);
@@ -34,9 +49,46 @@ export default function SignupForm({setOpen}) {
   const checkboxHandler = () => {
     setAgree(!agree);
   }
-  const btnHandler = () => {
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  const validations = () => {
+    if(!password.trim()){
+      errors.password = 'Password is required'
+    }else if(password.length < 6){
+      errors.password = 'Password must be at least 6 characters'
+    }
+
+    if (password !== pwdAgain) {
+        errors.pwdAgain = 'Passwords do not match'
+    }
+  }
+  
+  const btnHandler = async () => {
     if (!agree) {
       handleOpen();
+    } else {
+      validations();
+      const errorMessagesArray = Object.values(errors);
+      console.log("Validation errors: ", errorMessagesArray);
+      if (errorMessagesArray.length > 0) {
+        setErrorMessages(errorMessagesArray);
+        setOpenSnackbar(true);
+      } else {
+        const payload = {
+          name: name,
+          lastname: lastname,
+          email: email,
+          password: password
+        };
+        console.log("payload: ", payload)
+        await signUp(payload);
+      }
     }
   };
     return (
@@ -61,6 +113,11 @@ export default function SignupForm({setOpen}) {
           required
           id="outlined-required"
           label="Required"
+          onChange={
+            (e) => {
+              setName(e.target.value);
+            }
+          }
         />
       </div>
       <div>
@@ -69,6 +126,11 @@ export default function SignupForm({setOpen}) {
           required
           id="outlined-required"
           label="Required"
+          onChange={
+            (e) => {
+              setLastname(e.target.value);
+            }
+          }
         />
       </div>
       <div>
@@ -77,6 +139,11 @@ export default function SignupForm({setOpen}) {
           required
           id="outlined-required"
           label="Required"
+          onChange={
+            (e) => {
+              setEmail(e.target.value);
+            }
+          }
         />
       </div>
       <div>
@@ -87,6 +154,11 @@ export default function SignupForm({setOpen}) {
           label="Required"
           type='password'
           autoComplete="current-password"
+          onChange={
+            (e) => {
+              setPassword(e.target.value);
+            }
+          }
         />
       </div>
       <div>
@@ -96,6 +168,11 @@ export default function SignupForm({setOpen}) {
           id="outlined-password-input"
           label="Required"
           type='password'
+          onChange={
+            (e) => {
+              setPwdAgain(e.target.value);
+            }
+          }
         />
       </div>
       <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
@@ -121,6 +198,25 @@ export default function SignupForm({setOpen}) {
               <Button onClick={handleClose}>Cerrar</Button>
           </Box>
       </Modal>
+      <Snackbar
+  open={openSnackbar}
+  autoHideDuration={6000} // Adjust the duration as needed
+  onClose={handleCloseSnackbar}
+>
+  <div>
+    {errorMessages.map((message, index) => (
+      <MuiAlert
+        key={index}
+        elevation={6}
+        variant="filled"
+        severity="error"
+        onClose={handleCloseSnackbar}
+      >
+        {message}
+      </MuiAlert>
+    ))}
+  </div>
+</Snackbar>
     </Box>
     )
 }

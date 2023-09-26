@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-const { logIn } = require("@utils/calls")
+const { signUp } = require("@utils/calls")
 import styles from "./page.module.css"
 
 import {SignupForm} from "@components/SignupForm"
@@ -23,7 +23,8 @@ const style = {
   };
 
 export default function Signup() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
