@@ -64,14 +64,6 @@ export default function SignupForm({setOpen}) {
         />
       </div>
       <div>
-        <h3>Lastname</h3>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-        />
-      </div>
-      <div>
         <h3>Email</h3>
         <TextField
           required
@@ -87,6 +79,15 @@ export default function SignupForm({setOpen}) {
           label="Required"
           type='password'
           autoComplete="current-password"
+        />
+      </div>
+      <div>
+        <h3>Password again</h3>
+        <TextField
+          required
+          id="outlined-password-input"
+          label="Required"
+          type='password'
         />
       </div>
       <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
