@@ -58,6 +58,20 @@ export default function SignupForm({setOpen}) {
   };
 
   const validations = () => {
+
+    /* Regex to validate emails */
+    const regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+
+    if(!name.trim()){
+      errors.name = 'User name is required'
+    }
+
+    if(!email.trim()){
+      errors.email = 'Email is required'
+    }else if(regex.test(email)){
+      errors.email = 'Email address is invalid'
+    }
+
     if(!password.trim()){
       errors.password = 'Password is required'
     }else if(password.length < 6){
