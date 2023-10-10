@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Snackbar, Alert as MuiAlert } from '@mui/material';
 import React, { useState } from "react";
-import { logIn } from '@utils/calls';
+import { logIn, getMe } from '@utils/calls';
 
 const style = {
   position: 'absolute',
@@ -59,6 +59,8 @@ export default function LoginForm({setOpen}) {
       };
       console.log("payload: ", payload);
       await logIn(payload);
+      const me = await getMe();
+      console.log("me: ", me);
     }
   };
     return (

@@ -56,3 +56,25 @@ export async function signUp(values) {
         }
     })
 }
+
+export async function getMe() {
+    var me = null;
+    if (getToken !== null) {
+        await apiCall("get", "users/me")
+        .then(response => {
+            if (response.data) {
+                me = response.data;
+            } else if (response.error) {
+                throw new Error("Error getMe(): ", response.error);
+                //return response.error;
+            } else {
+                console.log("Error getMe(): ", response);
+                throw new Error("Somthing terribly went wrong in getMe().");
+                //return response.error;
+            }
+        });
+        return me;
+    } else {
+        return null;
+    }
+}
