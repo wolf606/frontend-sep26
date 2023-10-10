@@ -11,10 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-<<<<<<< HEAD
-=======
     "@mui/icons-material": "^5.14.13",
->>>>>>> b59dea18bca1f36b6e48a605db9a0a49e4e01037
     "@mui/material": "^5.14.13",
     "jwt-decode": "^3.1.2",
     "next": "13.5.1",
