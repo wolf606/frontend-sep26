@@ -1,10 +1,12 @@
+import { SignInMenu } from "@components/SignInMenu";
+
 export default function DashboardLayout({
     children,
   }) {
     return (
       <section>
         <nav>
-        <h1>Login Menu Bar</h1>
+        <SignInMenu></SignInMenu>
         </nav>
         {children}
       </section>

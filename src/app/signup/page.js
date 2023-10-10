@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react"
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-const { signUp } = require("@utils/calls")
-import styles from "./page.module.css"
+import styles from "./page.module.css";
 
 import {SignupForm} from "@components/SignupForm"
 
