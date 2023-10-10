@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Typography, Button, Snackbar, Alert as MuiAlert } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React, { useState } from "react";
-import { signUp } from '@utils/calls';
+import { logIn, signUp } from '@utils/calls';
 
 
 const style = {
@@ -60,7 +60,7 @@ export default function SignupForm({setOpen}) {
   const validations = () => {
 
     /* Regex to validate emails */
-    const regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+    const regex = /* /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/ *//^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!name.trim()){
       errors.name = 'User name is required'
@@ -69,6 +69,8 @@ export default function SignupForm({setOpen}) {
     if(!email.trim()){
       errors.email = 'Email is required'
     }else if(regex.test(email)){
+      console.log("Email address is invalid")
+    }else if(!regex.test(email) || email !== ''){
       errors.email = 'Email address is invalid'
     }
 
