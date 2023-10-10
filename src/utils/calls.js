@@ -13,7 +13,8 @@ export async function logIn(values) {
             const decoded = verifyToken(token);
             if (decoded !== null) {
                 localStorage.setItem("token", token);
-                window.location.href = "/login";
+                console.log("token: ", getToken());
+                //window.location.href = "/dashboard";
                 //Remove lines and add them in the sing in website
             } else {
                 console.log("Invalid token: ", response);
