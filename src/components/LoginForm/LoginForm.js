@@ -59,8 +59,8 @@ export default function LoginForm({setOpen}) {
       };
       console.log("payload: ", payload);
       await logIn(payload);
-      const me = await getMe();
-      console.log("me: ", me);
+      //const me = await getMe();
+      //console.log("me: ", me);
     }
   };
     return (

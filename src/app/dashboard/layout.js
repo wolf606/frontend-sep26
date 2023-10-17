@@ -1,10 +1,12 @@
+import { DashboardMenu } from "@components/DashboardMenu"
+
 export default function DashboardLayout({
     children,
   }) {
     return (
       <section>
         <nav>
-        <h1>Menu</h1>
+          <DashboardMenu></DashboardMenu>
         </nav>
         {children}
       </section>

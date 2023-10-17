@@ -14,7 +14,7 @@ export async function logIn(values) {
             if (decoded !== null) {
                 localStorage.setItem("token", token);
                 console.log("token: ", getToken());
-                //window.location.href = "/dashboard";
+                window.location.href = "/dashboard";
                 //Remove lines and add them in the sing in website
             } else {
                 console.log("Invalid token: ", response);

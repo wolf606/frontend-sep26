@@ -16,6 +16,12 @@ export default function SignInMenu() {
           </Typography>
           <Button 
             color="inherit"
+            href='/dashboard'
+          >
+            Dashboard
+          </Button>
+          <Button 
+            color="inherit"
             href='/login'
           >
             Login

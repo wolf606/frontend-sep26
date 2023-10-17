@@ -12,7 +12,6 @@ export default function Services() {
 
     return (
         <div>
-            <p>hello</p>
             <Button 
             variant="contained"
             onClick={updateNow}
