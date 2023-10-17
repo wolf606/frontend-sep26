@@ -78,3 +78,25 @@ export async function getMe() {
         return null;
     }
 }
+
+export async function getUsers() {
+    var users = null;
+    if (getToken !== null) {
+        await apiCall("get", "users")
+        .then(response => {
+            if (response.data) {
+                users = response.data;
+            } else if (response.error) {
+                throw new Error("Error getUsers(): ", response.error);
+                //return response.error;
+            } else {
+                console.log("Error getMe(): ", response);
+                throw new Error("Somthing terribly went wrong in getUsers().");
+                //return response.error;
+            }
+        });
+        return users;
+    } else {
+        return null;
+    }
+}
