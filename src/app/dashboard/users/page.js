@@ -18,7 +18,7 @@ export default function Services() {
           >
             Update
           </Button>
-            <UserList updateTable={updateTable} ></UserList>
+            <UserList updateTable={updateTable} setUpdateTable={setUpdateTable} ></UserList>
         </div>
     )
 }
