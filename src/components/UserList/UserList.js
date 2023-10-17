@@ -13,14 +13,13 @@ const columns = [
     { field: 'role', headerName: 'Role', width: 70 },
   ];
 
-export default function UserList({updateTable, setUpdateTable}) {
+export default function UserList({updateTable, selectedRows, setSelectedRows}) {
     const [users, setUsers] = useState([]);
     const [cache, setCache] = useState([]);
 
     useEffect(() => {
         getUsers()
         .then(response => {
-            console.log("Response: ", response);
           setUsers(response);
           setCache(response);
         });
@@ -39,6 +38,10 @@ export default function UserList({updateTable, setUpdateTable}) {
       });
 
       setUsers(matchingItems);
+    };
+
+    const handleSelectionModelChange = (selection) => {
+      setSelectedRows(selection);
     };
 
     return (
@@ -65,6 +68,8 @@ export default function UserList({updateTable, setUpdateTable}) {
         <DataGrid
           rows={users}
           columns={columns}
+          onRowSelectionModelChange={handleSelectionModelChange}
+          selectionModel={selectedRows}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
