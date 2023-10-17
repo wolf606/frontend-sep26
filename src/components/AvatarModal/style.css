@@ -1,0 +1,42 @@
+.avatar-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;    
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.name-container{
+    padding-right: 10px;
+}
+
+.lastname-container{
+    padding-left: 10px;
+}
+
+
+
+/* Styling for Email and Password fields */
+.field-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+/* Button container styling */
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
