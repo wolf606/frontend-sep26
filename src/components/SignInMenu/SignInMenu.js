@@ -6,27 +6,36 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 export default function SignInMenu() {
-  
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{
+      flexGrow: 1
+    }}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Services
+        <Toolbar sx={{
+          color: 'white',
+          background: 'linear-gradient(to right, #4275ff, #021036)',
+          }}
+        >
+          <Typography variant="h6" component="div" sx={{
+            flexGrow: 1,
+          }}
+          >Services
           </Typography>
-          <Button 
+          <Button
             color="inherit"
             href='/dashboard'
           >
             Dashboard
           </Button>
-          <Button 
+          <Button
             color="inherit"
             href='/login'
           >
             Login
           </Button>
-          <Button 
+          <Button
             color="inherit"
             href='/signup'
           >

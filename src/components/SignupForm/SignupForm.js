@@ -26,7 +26,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function SignupForm({setOpen}) {
+export default function SignupForm({ setOpen }) {
   const [agree, setAgree] = useState(false);
   const [openM, setOpenM] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -62,29 +62,29 @@ export default function SignupForm({setOpen}) {
     /* Regex to validate emails */
     const regex = /* /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/ *//^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if(!name.trim()){
+    if (!name.trim()) {
       errors.name = 'User name is required'
     }
 
-    if(!email.trim()){
+    if (!email.trim()) {
       errors.email = 'Email is required'
-    }else if(regex.test(email)){
+    } else if (regex.test(email)) {
       console.log("Email address is invalid")
-    }else if(!regex.test(email) || email !== ''){
+    } else if (!regex.test(email) || email !== '') {
       errors.email = 'Email address is invalid'
     }
 
-    if(!password.trim()){
+    if (!password.trim()) {
       errors.password = 'Password is required'
-    }else if(password.length < 6){
+    } else if (password.length < 6) {
       errors.password = 'Password must be at least 6 characters'
     }
 
     if (password !== pwdAgain) {
-        errors.pwdAgain = 'Passwords do not match'
+      errors.pwdAgain = 'Passwords do not match'
     }
   }
-  
+
   const btnHandler = async () => {
     if (!agree) {
       handleOpen();
@@ -107,132 +107,244 @@ export default function SignupForm({setOpen}) {
       }
     }
   };
-    return (
-        <Box
+
+  const styledBox = {
+    position: 'absolute',
+    top: '550px',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    width: '450px',
+    height: 'auto',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+    margin: 'auto',
+    padding: '50px',
+    display: 'flex',
+  }
+
+  return (
+
+    <Box
       component="form"
-      sx={{
-        '& .MuiTextField-root': 
-        { 
-            m: 1, 
-            width: '25ch',
-        },
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        width: 'fit-content',
-        padding: '1rem'
-      }}
+      sx={ styledBox }
       autoComplete="off"
     >
       <div>
-        <h3>Name</h3>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          onChange={
-            (e) => {
-              setName(e.target.value);
+
+        <h1 style={{
+          textAlign: 'center',
+          marginBottom: '25px',
+          fontSize: '2rem',
+        }}
+        >SignUp</h1>
+
+        <div>
+          <h3 style={{
+            marginBottom: '10px'
+          }}
+          >Name</h3>
+          <TextField
+            style={{
+              width: '100%',
+              marginBottom: '25px',
+            }}
+            required
+            id="outlined-required"
+            label="Required"
+            onChange={
+              (e) => {
+                setName(e.target.value);
+              }
             }
-          }
-        />
-      </div>
-      <div>
-        <h3>Lastname</h3>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          onChange={
-            (e) => {
-              setLastname(e.target.value);
+          />
+        </div>
+        <div>
+          <h3 style={{
+            marginBottom: '10px'
+          }}
+          >Lastname</h3>
+          <TextField
+            style={{
+              width: '100%',
+              marginBottom: '25px',
+            }}
+            required
+            id="outlined-required"
+            label="Required"
+            onChange={
+              (e) => {
+                setLastname(e.target.value);
+              }
             }
-          }
-        />
-      </div>
-      <div>
-        <h3>Email</h3>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          onChange={
-            (e) => {
-              setEmail(e.target.value);
+          />
+        </div>
+        <div>
+          <h3 style={{
+            marginBottom: '10px'
+          }}
+          >Email</h3>
+          <TextField
+            style={{
+              width: '100%',
+              marginBottom: '25px',
+            }}
+            required
+            id="outlined-required"
+            label="Required"
+            onChange={
+              (e) => {
+                setEmail(e.target.value);
+              }
             }
-          }
-        />
-      </div>
-      <div>
-        <h3>Password</h3>
-        <TextField
-          required
-          id="outlined-password-input"
-          label="Required"
-          type='password'
-          autoComplete="current-password"
-          onChange={
-            (e) => {
-              setPassword(e.target.value);
+          />
+        </div>
+        <div>
+          <h3 style={{
+            marginBottom: '10px'
+          }}
+          >Password</h3>
+          <TextField
+            style={{
+              width: '100%',
+              marginBottom: '25px',
+            }}
+            required
+            id="outlined-password-input"
+            label="Required"
+            type='password'
+            autoComplete="current-password"
+            onChange={
+              (e) => {
+                setPassword(e.target.value);
+              }
             }
-          }
-        />
-      </div>
-      <div>
-        <h3>Password again</h3>
-        <TextField
-          required
-          id="outlined-password-input"
-          label="Required"
-          type='password'
-          onChange={
-            (e) => {
-              setPwdAgain(e.target.value);
+          />
+        </div>
+        <div>
+          <h3 style={{
+            marginBottom: '10px'
+          }}
+          >Password again</h3>
+          <TextField
+            style={{
+              width: '100%',
+              marginBottom: '25px',
+            }}
+            required
+            id="outlined-password-input"
+            label="Required"
+            type='password'
+            onChange={
+              (e) => {
+                setPwdAgain(e.target.value);
+              }
             }
-          }
-        />
-      </div>
-      <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-        <FormControlLabel control={<Checkbox onClick={checkboxHandler}/>} />
-        <Typography color="black">Acepto los</Typography>
-        <Typography color="blue" onClick={setOpen} style={{marginLeft:'0.25rem',cursor:'pointer'}}>Terminos y Condiciones  </Typography>
-      </div>
-      <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-      <Button variant="contained" onClick={btnHandler} >Registrarse</Button>
-      <Button variant="outlined">Cancelar</Button>
-      </div>
-      <Modal
+          />
+        </div>
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center', 
+          marginBottom: '25px',
+          width: '100%',
+          margin: '10px'
+        }}
+        >
+          <FormControlLabel control={<Checkbox onClick={checkboxHandler} />} />
+          <Typography color="black">Acepto los</Typography>
+          <Typography 
+            color="blue"
+            onClick={setOpen}
+            style={{ 
+              marginLeft: '10px',
+              cursor: 'pointer'
+            }}>Terminos y Condiciones</Typography>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '15px',
+          width: '100%',
+          height: '3rem',
+          border: 'none',
+          cursor: 'pointer'
+        }}
+        >
+          <Button
+            variant="contained"
+            onClick={btnHandler}
+            style={{
+              backgroundColor: '#3f51b5',
+              color: '#fff',
+              width: '100%',
+              height: '3rem',
+              border: 'none',
+              cursor: 'pointer',
+              marginRight: '15px'
+            }}
+          >Registrarse</Button>
+
+          <Button
+            style={{
+              backgroundColor: 'transparent',
+              color: '#3f51b5',
+              width: '100%',
+              height: '3rem',
+              border: '2px solid #3f51b5',
+              cursor: 'pointer'
+            }}
+          >Cancelar</Button>
+        </div>
+
+        <Modal
           open={openM}
           onClose={handleClose}
           aria-labelledby="parent-modal-title"
           aria-describedby="parent-modal-description"
-      >
+        >
           <Box sx={{ ...style, width: '750px' }}>
-              <h2 id="parent-modal-title">Terminos y Condiciones</h2>
-              <p id="parent-modal-description">
+            <h2 id="parent-modal-title">Terminos y Condiciones</h2>
+            <p id="parent-modal-description">
               Debes aceptar los terminos y condiciones
-              </p>
-              <Button onClick={handleClose}>Cerrar</Button>
+            </p>
+            <Button 
+              onClick={handleClose}
+              style={{
+                backgroundColor: '#3f51b5',
+                color: '#fff',
+                width: '100%',
+                height: '3rem',
+                border: 'none',
+                cursor: 'pointer',
+                marginRight: '15px'
+              }}
+            >Cerrar</Button>
           </Box>
-      </Modal>
-      <Snackbar
-  open={openSnackbar}
-  autoHideDuration={6000} // Adjust the duration as needed
-  onClose={handleCloseSnackbar}
->
-  <div>
-    {errorMessages.map((message, index) => (
-      <MuiAlert
-        key={index}
-        elevation={6}
-        variant="filled"
-        severity="error"
-        onClose={handleCloseSnackbar}
-      >
-        {message}
-      </MuiAlert>
-    ))}
-  </div>
-</Snackbar>
+
+        </Modal>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000} // Adjust the duration as needed
+          onClose={handleCloseSnackbar}
+        >
+          <div>
+            {errorMessages.map((message, index) => (
+              <MuiAlert
+                key={index}
+                elevation={6}
+                variant="filled"
+                severity="error"
+                onClose={handleCloseSnackbar}
+              >
+                {message}
+              </MuiAlert>
+            ))}
+          </div>
+        </Snackbar>
+      </div>
     </Box>
-    )
+  )
 }

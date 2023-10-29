@@ -27,7 +27,10 @@ export default function DashboardMenu() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{
+            color: 'white',
+            background: 'linear-gradient(to right, #4275ff, #021036)',
+          }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>

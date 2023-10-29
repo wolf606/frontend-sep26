@@ -32,34 +32,34 @@ export default function BasicModal() {
 
                     <div className='container'>
                         <div className='name-container'>
-                            
-                                <TextField
-                                    required
-                                    id="outlined-required"
-                                    label="Name"
-                                    onChange={
-                                        (e) => {
-                                            setEmail(e.target.value);
-                                        }
+
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Name"
+                                onChange={
+                                    (e) => {
+                                        setEmail(e.target.value);
                                     }
-                                />
+                                }
+                            />
                         </div>
                         <div className='lastname-container'>
-                                <TextField
-                                    required
-                                    id="outlined-required"
-                                    label="Last Name"
-                                    onChange={
-                                        (e) => {
-                                            setEmail(e.target.value);
-                                        }
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Last Name"
+                                onChange={
+                                    (e) => {
+                                        setEmail(e.target.value);
                                     }
-                                />
+                                }
+                            />
                         </div>
                     </div>
 
                     <div className='field-container'>
-                        
+
                         <TextField
                             required
                             id="outlined-required"
@@ -80,9 +80,9 @@ export default function BasicModal() {
                             type='password'
                             autoComplete="current-password"
                             onChange={
-                              (e) => {
-                                setPassword(e.target.value);
-                              }
+                                (e) => {
+                                    setPassword(e.target.value);
+                                }
                             }
                         />
                     </div>
