@@ -16,7 +16,14 @@ export default function BasicModal() {
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
+            <Button
+                onClick={handleOpen}
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            ></Button>
             <Modal
                 open={open}
                 onClose={handleClose}
