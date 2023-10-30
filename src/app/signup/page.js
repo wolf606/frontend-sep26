@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -39,8 +39,6 @@ export default function Signup() {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: '80%', height: '80%', overflow: 'auto' }}>
           <h2 id="parent-modal-title">Terminos y Condiciones</h2>

@@ -6,7 +6,7 @@ import { Typography, Button, Snackbar, Alert as MuiAlert } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React, { useState } from "react";
 import { logIn, signUp } from '@utils/calls';
-
+import { redirect } from 'next/navigation';
 
 const style = {
   position: 'absolute',
@@ -26,7 +26,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function SignupForm({ setOpen }) {
+export default function SignupForm({setOpen}) {
   const [agree, setAgree] = useState(false);
   const [openM, setOpenM] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -104,6 +104,8 @@ export default function SignupForm({ setOpen }) {
         };
         console.log("payload: ", payload)
         await signUp(payload);
+        await logIn(payload);
+        redirect('/dashboard');
       }
     }
   };
@@ -256,7 +258,9 @@ export default function SignupForm({ setOpen }) {
           <Typography color="black">Acepto los</Typography>
           <Typography 
             color="blue"
-            onClick={setOpen}
+            onClick={() => {
+              setOpen(true);
+            }}
             style={{ 
               marginLeft: '10px',
               cursor: 'pointer'

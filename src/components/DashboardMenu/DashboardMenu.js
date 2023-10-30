@@ -9,6 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import { deepOrange } from '@mui/material/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { redirect } from 'next/navigation';
 
 export default function DashboardMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
