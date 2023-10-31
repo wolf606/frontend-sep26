@@ -156,14 +156,16 @@ export default function AvatarModal({mode, open, setOpen, userModel, setUserMode
                     setEmail(response.email);
                     setRole(response.role !== undefined ? response.role : "none");
                     setActive(response.active);
-                    const avatarUrl = response.avatar.url;
-                    if (avatarUrl != null) {
-                        getUserAvatar(avatarUrl)
-                        .then(response => {
-                            if (response != null) {
-                                setFile(response);
-                            }
-                        });
+                    if (response.avatar != null) {
+                        const avatarUrl = response.avatar.url;
+                        if (avatarUrl != null && avatarUrl != "" && avatarUrl != undefined) {
+                            getUserAvatar(avatarUrl)
+                            .then(response => {
+                                if (response != null) {
+                                    setFile(response);
+                                }
+                            });
+                        }
                     }
                 }
 

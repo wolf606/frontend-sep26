@@ -8,7 +8,8 @@ import {
   AlertTitle,
   Snackbar,
   Modal,
-  Box
+  Box,
+  Typography
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import {
@@ -16,7 +17,8 @@ import {
   Add,
   Delete,
   Edit,
-  Refresh
+  Refresh,
+  Warning
 } from '@mui/icons-material';
 import { getUsers, deleteOneUser, deleteManyUsers } from '@utils/calls';
 import { AvatarModal } from '@components/AvatarModal';
@@ -51,6 +53,9 @@ export default function UserList() {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("error");
   const [openModal, setOpenModal] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [selectedLastname, setSelectedLastname] = useState("");
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
@@ -124,12 +129,9 @@ export default function UserList() {
   };
 
   const deleteUser = () => {
-    if (selectedRows.length != 0) {
-      if (selectedRows.length > 1) {
-        setOpenModal(true);
-      } else {
-        setOpenModal(true); 
-      }
+    if (selectedRows.length > 0) {
+      getUserByIdCache();
+      setOpenModal(true);
     } else {
       setAlertSeverity("error");
       setAlertMessage("Please select a user to delete.");
@@ -150,6 +152,15 @@ export default function UserList() {
   const handleSelectionModelChange = (selection) => {
     setSelectedRows(selection);
   };
+
+  const getUserByIdCache = () => {
+    if (selectedRows.length > 0) {
+      const user = cache.find((user) => user.id == selectedRows[selectedRows.length - 1]);
+      setSelectedName(user.name);
+      setSelectedLastname(user.lastname);
+      setSelectedEmail(user.email);
+    }
+  }
 
   return (
     <div style={{
@@ -289,18 +300,79 @@ export default function UserList() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: 700,
             bgcolor: 'background.paper',
             border: '2px solid #000',
             boxShadow: 24,
             p: 4,
           }}
         >
-          {
-            selectedRows.length > 1 ?
-            <h3>Are you sure you want to delete {selectedRows.length} users?</h3> :
-            <h3>Are you sure you want to delete this user?</h3>
-          }
+          <div
+            style={
+              {
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }
+            }
+          >
+            <Warning
+              style={{
+                fontSize: '50px',
+                color: '#f44336',
+                marginRight: '18px'
+              }}
+            />
+            {
+              selectedRows.length > 0 ?
+              <div> {
+                selectedRows.length > 1 ?
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                <Typography>Are you sure you want to delete </Typography> 
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                    color: '#f44336',
+                    padding: '0 5px',
+                  }}
+                >
+                  {selectedRows.length}
+                </Typography>
+                <Typography> users?</Typography>
+                </div>:
+                <div>
+                  <Typography>Are you sure you want to delete this user?</Typography>
+                  <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  >
+                    {selectedName} {selectedLastname}
+                  </Typography>
+                  <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                  }}
+                  >
+                    {selectedEmail}
+                  </Typography>
+                </div>
+                
+              } </div> :
+              <Typography>Error</Typography>
+            }
+          </div>
           <div style={{
             display: 'flex',
             flexDirection: 'row',
