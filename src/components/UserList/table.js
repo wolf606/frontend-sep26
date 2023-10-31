@@ -6,7 +6,9 @@ import {
   Checkbox,
   Alert,
   AlertTitle,
-  Snackbar
+  Snackbar,
+  Modal,
+  Box
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import {
@@ -48,6 +50,7 @@ export default function UserList() {
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("error");
+  const [openModal, setOpenModal] = useState(false);
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
@@ -88,10 +91,8 @@ export default function UserList() {
     }
   };
 
-  const deleteUser = async () => {
-    if (selectedRows.length != 0) {
-      if (selectedRows.length > 1) {
-        await deleteManyUsers({id: selectedRows})
+  const deleteManyHandler = async () => {
+    await deleteManyUsers({id: selectedRows})
         .then(response => {
           if (response) {
             setUpdateTable(!updateTable);
@@ -104,8 +105,10 @@ export default function UserList() {
             setAlert(true);
           }
         });
-      } else {
-        await deleteOneUser(selectedRows[0])
+  };
+
+  const deleteOneHandler = async () => {
+    await deleteOneUser(selectedRows[0])
         .then(response => {
           if (response) {
             setUpdateTable(!updateTable);
@@ -118,6 +121,14 @@ export default function UserList() {
             setAlert(true);
           }
         });
+  };
+
+  const deleteUser = () => {
+    if (selectedRows.length != 0) {
+      if (selectedRows.length > 1) {
+        setOpenModal(true);
+      } else {
+        setOpenModal(true); 
       }
     } else {
       setAlertSeverity("error");
@@ -266,6 +277,70 @@ export default function UserList() {
         updateTable={updateTable}
         setUpdateTable={setUpdateTable}
       />
+      <Modal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false);
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {
+            selectedRows.length > 1 ?
+            <h3>Are you sure you want to delete {selectedRows.length} users?</h3> :
+            <h3>Are you sure you want to delete this user?</h3>
+          }
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            marginTop: '1rem',
+          }}
+          >
+            <Button
+              variant="contained"
+              style={{ 
+                background: '#3f51b5',
+                marginRight: '18px'
+              }}
+              onClick={() => {
+                if (selectedRows.length > 1) {
+                  deleteManyHandler();
+                } else {
+                  deleteOneHandler();
+                }
+                setOpenModal(false);
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              style={{ 
+                background: '#f44336',
+                marginRight: '18px'
+              }}
+              onClick={() => {
+                setOpenModal(false);
+              }}
+            >
+              No
+            </Button>
+          </div>
+        </Box>
+      </Modal>
       <Snackbar 
         open={alert} 
         autoHideDuration={6000} 

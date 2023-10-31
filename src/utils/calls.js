@@ -18,17 +18,18 @@ export async function logIn(values) {
                 //Remove lines and add them in the sing in website
             } else {
                 console.log("Invalid token: ", response);
-                throw new Error("Invalid token.");
+                return null;
                 //return {error: "token_invalid"};
             }
         } else if (response.error) {
             if (!response.error.active) {
-                throw new Error("not_active");
+                console.log("not_active");
+                return null;
             }
             //return response.error;
         } else {
             console.log("Invalid credentials: ", response);
-            throw new Error("Invalid credentials.");
+            return null;
             //return response.error;
         }
     })
@@ -195,6 +196,7 @@ export async function deleteManyUsers(params) {
     if (getToken !== null) {
         await apiCall("delete", `users`, params)
         .then(response => {
+            console.log("response: ", response);
             if (response.data) {
                 success = true;
             }

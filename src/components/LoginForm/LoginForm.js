@@ -29,7 +29,7 @@ export default function LoginForm({ setOpen }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const errors = {};
+  var errors = {};
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -49,7 +49,6 @@ export default function LoginForm({ setOpen }) {
   const btnHandler = async () => {
     validations();
     const errorMessagesArray = Object.values(errors);
-    console.log("Validation errors: ", errorMessagesArray);
     if (errorMessagesArray.length > 0) {
       setErrorMessages(errorMessagesArray);
       setOpenSnackbar(true);
@@ -59,7 +58,15 @@ export default function LoginForm({ setOpen }) {
         password: password
       };
       console.log("payload: ", payload);
-      await logIn(payload);
+      const res = await logIn(payload);
+      if (res == null) {
+        errors = {};
+        errors.wrongPassword = 'Wrong credentials.'
+        const errMsgs = Object.values(errors);
+        setErrorMessages(errorMessagesArray);
+        setOpenSnackbar(true);
+      }
+      
       //const me = await getMe();
       //console.log("me: ", me);
     }
