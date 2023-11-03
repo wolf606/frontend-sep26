@@ -17,19 +17,6 @@ export default function Home() {
           </SignInMenu>
         </nav>
       </section>
-
-      <div>
-        <button onClick={async () => {
-          await fetch('/api/send', {
-            method: 'POST',
-          })
-          const data = await res.json()
-          console.log(data);
-        }}>
-          Send Email
-        </button>
-
-      </div>
       
       <h1 style={{
         textAlign: 'center',

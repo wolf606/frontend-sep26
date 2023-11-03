@@ -4,9 +4,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Typography, Button, Snackbar, Alert as MuiAlert } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { logIn, signUp } from '@utils/calls';
 import { redirect } from 'next/navigation';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const style = {
   position: 'absolute',
@@ -26,7 +30,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function SignupForm({setOpen}) {
+export default function SignupForm({ setOpen }) {
   const [agree, setAgree] = useState(false);
   const [openM, setOpenM] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -38,6 +42,41 @@ export default function SignupForm({setOpen}) {
   const [password, setPassword] = useState("");
   const [pwdAgain, setPwdAgain] = useState("");
   const errors = {};
+
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCapital, setSelectedCapital] = useState('');
+
+  /*  
+  const [selectedCountryState, setSelectedCountryState] = useState(''); // Initialize with an empty string
+  const [states, setStates] = useState([]); 
+  const [capitals, setCapitals] = useState([]);
+  */
+
+
+  useEffect(() => {
+    // Fetch the country data from the API when the component mounts
+    fetch('https://restcountries.com/v3.1/all')
+      .then((response) => response.json())
+      .then((data) => setCountries(data));
+  }, []);
+
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
+
+  useEffect(() => {
+    if (selectedCountry) {
+      const selectedCountryData = countries.find(
+        (country) => country.name.common === selectedCountry
+      );
+
+      if (selectedCountryData) {
+        setSelectedCapital(selectedCountryData.capital);
+      }
+    }
+  }, [selectedCountry, countries]);
+
 
   const handleOpen = () => {
     setOpenM(true);
@@ -56,6 +95,7 @@ export default function SignupForm({setOpen}) {
     }
     setOpenSnackbar(false);
   };
+
 
   const validations = () => {
 
@@ -111,26 +151,26 @@ export default function SignupForm({setOpen}) {
   };
 
   const styledBox = {
-    position: 'absolute',
-    top: '550px',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+
+
     backgroundColor: 'white',
     justifyContent: 'center',
-    width: '450px',
+    width: '650px',
     height: 'auto',
     borderRadius: '10px',
     boxShadow: '0 0 10px rgba(0,0,0,0.5)',
-    margin: 'auto',
-    padding: '50px',
-    display: 'flex',
+    paddingTop: '25px',
+    addingBottom: '35px',
+    marginBottom: '35px',
+    marginTop: '25px',
   }
 
   return (
 
     <Box
       component="form"
-      sx={ styledBox }
+      sx={styledBox}
       autoComplete="off"
     >
       <div>
@@ -202,6 +242,64 @@ export default function SignupForm({setOpen}) {
             }
           />
         </div>
+
+
+        <h3 style={{
+          marginBottom: '10px'
+        }}>Country</h3>
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: '25px',
+        }}>
+          <div style={{
+            width: '100%',
+            marginRight: '15px'
+          }}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="country-select">Select a country</InputLabel>
+              <Select
+                label="Select a country"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                inputProps={{ name: 'country', id: 'country-select' }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {countries.map((country, index) => (
+                  <MenuItem key={index} value={country.name.common}>
+                    {country.name.common}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+
+          {/*  PENDIENTE POR IMPLEMENTAR YA QUE NO SE ENCUENTRA EN LA API DE PAISES
+USAR OTRA API REQUIERE PEDIR UNA KEY QUE TARDA 2 A 3 DÍAS
+          <div style={{
+            width: '100%',
+          }}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="capital-select">Capital City</InputLabel>
+              <Select
+                label="Capital City"
+                value={selectedCapital}
+                inputProps={{ name: 'capital', id: 'capital-select' }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={selectedCapital}>{selectedCapital}</MenuItem>
+              </Select>
+            </FormControl>
+          </div> */}
+
+        </div>
+
         <div>
           <h3 style={{
             marginBottom: '10px'
@@ -245,10 +343,10 @@ export default function SignupForm({setOpen}) {
             }
           />
         </div>
-        <div style={{ 
+        <div style={{
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'center', 
+          alignItems: 'center',
           marginBottom: '25px',
           width: '100%',
           margin: '10px'
@@ -256,12 +354,12 @@ export default function SignupForm({setOpen}) {
         >
           <FormControlLabel control={<Checkbox onClick={checkboxHandler} />} />
           <Typography color="black">Acepto los</Typography>
-          <Typography 
+          <Typography
             color="blue"
             onClick={() => {
               setOpen(true);
             }}
-            style={{ 
+            style={{
               marginLeft: '10px',
               cursor: 'pointer'
             }}>Terminos y Condiciones</Typography>
@@ -271,6 +369,7 @@ export default function SignupForm({setOpen}) {
           display: 'flex',
           justifyContent: 'center',
           marginTop: '15px',
+          marginBottom: '55px',
           width: '100%',
           height: '3rem',
           border: 'none',
@@ -298,9 +397,32 @@ export default function SignupForm({setOpen}) {
               width: '100%',
               height: '3rem',
               border: '2px solid #3f51b5',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              marginRight: '15px'
+
             }}
           >Cancelar</Button>
+
+          <Button
+            variant="contained"
+            onClick={async () => {
+              await fetch('/api/send', {
+                method: 'POST',
+              })
+              const data = await res.json()
+              console.log(data);
+            }}
+            style={{
+              backgroundColor: '#3f51b5',
+              color: '#fff',
+              width: '100%',
+              height: '3rem',
+              border: 'none',
+              cursor: 'pointer',
+              marginRight: '15px'
+            }}
+          >Send email</Button>
+
         </div>
 
         <Modal
@@ -314,7 +436,7 @@ export default function SignupForm({setOpen}) {
             <p id="parent-modal-description">
               Debes aceptar los terminos y condiciones
             </p>
-            <Button 
+            <Button
               onClick={handleClose}
               style={{
                 backgroundColor: '#3f51b5',
